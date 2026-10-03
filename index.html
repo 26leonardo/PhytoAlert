@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="meta.title">PhytoAlert — Diagnosi in campo della Flavescenza dorata</title>
+    <meta name="description" data-i18n-attr="content:meta.description" content="PhytoAlert rileva la Flavescenza dorata direttamente in vigneto, prima dei sintomi: esito in 5 minuti con la Smart Cartridge brevettata. Nata dalla ricerca dell'Università di Bologna.">
+    <meta property="og:title" content="PhytoAlert — Diagnosi in campo della Flavescenza dorata">
+    <meta property="og:description" content="Esito in 5 minuti, direttamente in vigneto, prima che la malattia sia visibile.">
+    <meta property="og:image" content="img/vigneto_phytoalert.jpg">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0f2a1d">
+    <link rel="icon" type="image/png" href="img/logo_phytoalert.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                        serif: ['Fraunces', 'Georgia', 'serif'],
+                        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+                    },
+                    colors: {
+                        paper: '#f6f3ec',
+                        'paper-2': '#ece7dc',
+                        ink: '#18211b',
+                        'ink-soft': '#4a544d',
+                        rule: '#d9d2c3',
+                        forest: '#0f2a1d',
+                        leaf: '#146c3d',
+                        'leaf-bright': '#1b8a4f',
+                        amber: '#e59218',
+                        'amber-dark': '#c87c0e',
+                    },
+                    maxWidth: { page: '76rem' },
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+        body { font-feature-settings: "ss01", "cv11"; }
+        .font-serif { font-variation-settings: "SOFT" 30, "WONK" 0; }
+        ::selection { background: #e59218; color: #18211b; }
+        :focus-visible { outline: 3px solid #e59218; outline-offset: 3px; border-radius: 2px; }
+
+        .eyebrow {
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+            font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+        }
+        .underline-amber {
+            background-image: linear-gradient(transparent 82%, rgba(229,146,24,.55) 82%, rgba(229,146,24,.55) 94%, transparent 94%);
+        }
+        .num { font-variant-numeric: tabular-nums lining-nums; }
+
+        /* Reveal: only hidden when JS is running, so content stays visible without it */
+        .js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .45s ease-out, transform .45s ease-out; }
+        .js .reveal.is-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .js .reveal { opacity: 1; transform: none; transition: none; }
+            * { transition-duration: 0ms !important; }
+        }
+    </style>
+    <script>document.documentElement.classList.add('js');</script>
+</head>
+<body class="bg-paper text-ink font-sans antialiased">
+
+    <a href="#main" data-i18n="a11y.skip" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-ink focus:text-paper focus:px-4 focus:py-2 focus:rounded">Vai al contenuto</a>
+
+    <!-- NAVBAR -->
+    <header id="siteHeader" class="sticky top-0 z-50 bg-paper/90 backdrop-blur border-b border-transparent transition-colors duration-200">
+        <div class="max-w-page mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
+            <a href="#top" class="flex items-center gap-2.5 shrink-0" aria-label="PhytoAlert">
+                <img src="img/logo_phytoalert.png" alt="" width="36" height="35" class="h-9 w-auto">
+                <span class="text-[1.15rem] font-semibold tracking-tight text-ink">Phyto<span class="text-amber-dark">Alert</span></span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-[0.9rem] text-ink-soft" aria-label="Principale" data-i18n-attr="aria-label:nav.label">
+                <a href="#problema" data-i18n="nav.problem" class="hover:text-ink transition-colors">Il problema</a>
+                <a href="#come-funziona" data-i18n="nav.how" class="hover:text-ink transition-colors">Come funziona</a>
+                <a href="#vantaggi" data-i18n="nav.benefits" class="hover:text-ink transition-colors">Vantaggi</a>
+                <a href="#team" data-i18n="nav.team" class="hover:text-ink transition-colors">Team</a>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <div class="relative">
+                    <button id="languageToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="languageMenu" aria-label="Lingua" data-i18n-attr="aria-label:lang.label"
+                        class="inline-flex items-center gap-1.5 h-10 px-3 rounded-md text-sm font-medium text-ink-soft hover:text-ink hover:bg-paper-2 transition-colors cursor-pointer">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+                        <span id="languageCurrent" class="font-mono text-xs">IT</span>
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div id="languageMenu" class="hidden absolute right-0 mt-2 w-40 rounded-md bg-white border border-rule shadow-lg p-1 z-[60]" role="menu">
+                        <button type="button" data-lang="it" role="menuitem" class="language-option w-full flex items-center justify-between px-3 py-2.5 rounded text-sm text-ink hover:bg-paper transition-colors cursor-pointer">
+                            <span>Italiano</span><span class="font-mono text-xs text-ink-soft">IT</span>
+                        </button>
+                        <button type="button" data-lang="en" role="menuitem" class="language-option w-full flex items-center justify-between px-3 py-2.5 rounded text-sm text-ink hover:bg-paper transition-colors cursor-pointer">
+                            <span>English</span><span class="font-mono text-xs text-ink-soft">EN</span>
+                        </button>
+                    </div>
+                </div>
+
+                <a href="#contatti" data-i18n="nav.contact" class="hidden sm:inline-flex items-center h-10 px-4 rounded-md bg-ink text-paper text-sm font-semibold hover:bg-forest transition-colors">Richiedi una demo</a>
+
+                <button id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu" data-i18n-attr="aria-label:nav.menu"
+                    class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md text-ink hover:bg-paper-2 transition-colors cursor-pointer">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <nav id="mobileMenu" class="hidden md:hidden border-t border-rule bg-paper" aria-label="Menu mobile">
+            <div class="max-w-page mx-auto px-5 py-3 flex flex-col text-base">
+                <a href="#problema" data-i18n="nav.problem" class="py-3 border-b border-rule/70">Il problema</a>
+                <a href="#come-funziona" data-i18n="nav.how" class="py-3 border-b border-rule/70">Come funziona</a>
+                <a href="#vantaggi" data-i18n="nav.benefits" class="py-3 border-b border-rule/70">Vantaggi</a>
+                <a href="#team" data-i18n="nav.team" class="py-3 border-b border-rule/70">Team</a>
+                <a href="#contatti" data-i18n="nav.contact" class="py-3 font-semibold text-leaf">Richiedi una demo</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+
+        <!-- HERO -->
+        <section id="top" class="max-w-page mx-auto px-5 sm:px-8 pt-12 md:pt-20 pb-16 md:pb-24">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+                <div class="lg:col-span-6">
+                    <p class="eyebrow text-leaf" data-i18n="hero.eyebrow">Diagnostica in campo · Flavescenza dorata</p>
+                    <h1 class="mt-5 font-serif text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[4.1rem] tracking-[-0.02em] text-ink" data-i18n="hero.title" data-i18n-html="true">
+                        Proteggi le tue viti quando sei <em class="italic underline-amber">ancora in tempo</em>.
+                    </h1>
+                    <p class="mt-6 text-lg leading-relaxed text-ink-soft max-w-[34rem]" data-i18n="hero.description" data-i18n-html="true">
+                        PhytoAlert individua il patogeno direttamente in vigneto, prima che la malattia sia visibile. Sonde a naso chimico e un algoritmo proprietario di Machine Learning restituiscono la diagnosi in pochi minuti, così puoi intervenire prima che l'infezione si diffonda.
+                    </p>
+                    <div class="mt-9 flex flex-col sm:flex-row sm:items-center gap-4">
+                        <a href="#contatti" data-i18n="hero.cta" class="inline-flex items-center justify-center h-12 px-6 rounded-md bg-amber text-ink font-semibold hover:bg-amber-dark transition-colors">Parla con un nostro esperto</a>
+                        <a href="#come-funziona" class="group inline-flex items-center justify-center sm:justify-start gap-2 h-12 px-2 font-medium text-ink">
+                            <span data-i18n="hero.learnMore" class="border-b border-ink/30 group-hover:border-ink transition-colors">Scopri come funziona</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+                    </div>
+
+                    <dl class="mt-12 pt-6 border-t border-rule grid grid-cols-[1fr_1.7fr_1fr] gap-4 max-w-[34rem]">
+                        <div>
+                            <dt class="eyebrow text-ink-soft" data-i18n="hero.fact1.label">Esito</dt>
+                            <dd class="mt-1 font-serif text-lg sm:text-2xl num" data-i18n="hero.fact1.value">5 min</dd>
+                        </div>
+                        <div>
+                            <dt class="eyebrow text-ink-soft" data-i18n="hero.fact2.label">Rilevazione</dt>
+                            <dd class="mt-1 font-serif text-lg sm:text-2xl" data-i18n="hero.fact2.value">Pre‑sintomatica</dd>
+                        </div>
+                        <div>
+                            <dt class="eyebrow text-ink-soft" data-i18n="hero.fact3.label">Origine</dt>
+                            <dd class="mt-1 font-serif text-lg sm:text-2xl" data-i18n="hero.fact3.value">UniBo</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <figure class="lg:col-span-6">
+                    <div class="relative overflow-hidden rounded-[3px] bg-paper-2">
+                        <img src="img/vigneto_phytoalert.jpg" width="800" height="570" alt="Filari di vite in collina al tramonto, con una tenuta sullo sfondo" data-i18n-attr="alt:hero.imageAlt" class="w-full aspect-[7/5] object-cover" fetchpriority="high">
+                    </div>
+                    <figcaption class="mt-3 flex items-start justify-between gap-6 text-sm text-ink-soft">
+                        <span data-i18n="hero.caption">Esito in 5 minuti con la Smart Cartridge.</span>
+                        <span class="font-mono text-xs whitespace-nowrap pt-0.5" data-i18n="hero.patent">Brevetto depositato</span>
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- CREDENTIALS STRIP -->
+        <div class="border-y border-rule bg-paper-2/60">
+            <div class="max-w-page mx-auto px-5 sm:px-8 py-5 flex flex-wrap items-center gap-x-10 gap-y-3 text-sm text-ink-soft">
+                <span data-i18n="strip.unibo" data-i18n-html="true">Nata dalla ricerca dell'<strong class="font-semibold text-ink">Università di Bologna</strong></span>
+                <span class="hidden sm:block w-px h-4 bg-rule" aria-hidden="true"></span>
+                <span data-i18n="strip.patent" data-i18n-html="true">Domanda di brevetto <span class="font-mono text-ink">n. 102026000026194</span></span>
+                <span class="hidden sm:block w-px h-4 bg-rule" aria-hidden="true"></span>
+                <span data-i18n="strip.trl" data-i18n-html="true">Tecnologia a <strong class="font-semibold text-ink">TRL 4</strong>, validazione in corso</span>
+            </div>
+        </div>
+
+        <!-- PROBLEMA -->
+        <section id="problema" class="max-w-page mx-auto px-5 sm:px-8 py-20 md:py-28">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
+                <div class="lg:col-span-5 reveal">
+                    <p class="eyebrow text-ink-soft"><span class="text-amber-dark">01</span> — <span data-i18n="problem.label">Il problema</span></p>
+                    <h2 class="mt-4 font-serif text-3xl sm:text-[2.6rem] leading-[1.1] tracking-[-0.015em]" data-i18n="problem.title">Quando la Flavescenza dorata si vede, spesso è già tardi.</h2>
+                    <p class="mt-6 text-ink-soft leading-relaxed" data-i18n="problem.intro">È un'infezione batterica da quarantena e un vero incubo per i viticoltori: resta latente per mesi, e gli strumenti diagnostici di oggi non permettono di controllare le piante asintomatiche su larga scala.</p>
+                    <p class="mt-6 font-serif italic text-xl leading-snug text-ink" data-i18n="problem.piedmont">Solo in Piemonte, 7.000 ettari di vigneto distrutti in 18 anni.</p>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <dl class="grid sm:grid-cols-2 border-t border-l border-rule">
+                        <div class="p-6 sm:p-8 border-b border-r border-rule reveal">
+                            <dt class="sr-only" data-i18n="problem.stat1.sr">Latenza</dt>
+                            <dd>
+                                <p class="font-serif text-5xl num tracking-tight" data-i18n="problem.stat1.value" data-i18n-html="true">6–18 <span class="text-2xl">mesi</span></p>
+                                <p class="mt-3 font-semibold" data-i18n="problem.stat1.title">Scoperta tardiva</p>
+                                <p class="mt-1.5 text-sm leading-relaxed text-ink-soft" data-i18n="problem.stat1.text">Il periodo in cui una vite può essere infetta senza mostrare alcun sintomo.</p>
+                            </dd>
+                        </div>
+                        <div class="p-6 sm:p-8 border-b border-r border-rule reveal">
+                            <dt class="sr-only" data-i18n="problem.stat2.sr">Tempi della PCR</dt>
+                            <dd>
+                                <p class="font-serif text-5xl num tracking-tight" data-i18n="problem.stat2.value" data-i18n-html="true">7–14 <span class="text-2xl">giorni</span></p>
+                                <p class="mt-3 font-semibold" data-i18n="problem.stat2.title">Diagnosi lenta e costosa</p>
+                                <p class="mt-1.5 text-sm leading-relaxed text-ink-soft" data-i18n="problem.stat2.text">L'attesa per una PCR di laboratorio, a 70–150 € a campione: impossibile uno screening di massa.</p>
+                            </dd>
+                        </div>
+                        <div class="p-6 sm:p-8 border-b border-r border-rule reveal">
+                            <dt class="sr-only" data-i18n="problem.stat3.sr">Soglia di estirpo</dt>
+                            <dd>
+                                <p class="font-serif text-5xl num tracking-tight" data-i18n="problem.stat3.value" data-i18n-html="true">&gt;20%</p>
+                                <p class="mt-3 font-semibold" data-i18n="problem.stat3.title">Estirpo totale obbligatorio</p>
+                                <p class="mt-1.5 text-sm leading-relaxed text-ink-soft" data-i18n="problem.stat3.text">Oltre questa soglia di infezione, il Regolamento UE 2016/2031 impone di estirpare l'intero vigneto.</p>
+                            </dd>
+                        </div>
+                        <div class="p-6 sm:p-8 border-b border-r border-rule reveal">
+                            <dt class="sr-only" data-i18n="problem.stat4.sr">Danno per ettaro</dt>
+                            <dd>
+                                <p class="font-serif text-5xl num tracking-tight" data-i18n="problem.stat4.value" data-i18n-html="true">65–85k <span class="text-2xl">€/ha</span></p>
+                                <p class="mt-3 font-semibold" data-i18n="problem.stat4.title">Danno irreversibile</p>
+                                <p class="mt-1.5 text-sm leading-relaxed text-ink-soft" data-i18n="problem.stat4.text">Tra reimpianto e mancato reddito nei 3–4 anni in cui il vigneto non produce.</p>
+                            </dd>
+                        </div>
+                    </dl>
+                    <p class="mt-4 text-xs text-ink-soft" data-i18n="problem.sources">Fonti: Regione Piemonte, DGR; prezzi di estirpazione e messa a dimora di un vigneto; I Grandi Vini, 2025.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COME FUNZIONA -->
+        <section id="come-funziona" class="bg-forest text-paper">
+            <div class="max-w-page mx-auto px-5 sm:px-8 py-20 md:py-28">
+                <div class="max-w-2xl reveal">
+                    <p class="eyebrow text-paper/70"><span class="text-amber">02</span> — <span data-i18n="how.label">Come funziona</span></p>
+                    <h2 class="mt-4 font-serif text-3xl sm:text-[2.6rem] leading-[1.1] tracking-[-0.015em]" data-i18n="how.title">Un laboratorio tascabile, dal filare al referto.</h2>
+                    <p class="mt-6 text-paper/80 leading-relaxed" data-i18n="how.intro">Le tecnologie di biosensoristica sviluppate per individuare rapidamente i patogeni nei pazienti umani, adattate alla salute delle piante. Semplice quanto un tampone rapido.</p>
+                </div>
+
+                <ol class="mt-14 grid md:grid-cols-3 gap-px bg-paper/15 border border-paper/15">
+                    <li class="bg-forest p-7 sm:p-8 reveal">
+                        <span class="font-mono text-sm text-amber">01</span>
+                        <h3 class="mt-5 font-serif text-2xl" data-i18n="how.step1.title">Navigatore da campo</h3>
+                        <p class="mt-3 text-[0.95rem] leading-relaxed text-paper/75" data-i18n="how.step1.text">Il GPS guida l'operatore verso le zone a rischio della mappa. Si campionano pool da 10 piante, con un dispositivo IP67 resistente a caldo, polvere e umidità.</p>
+                    </li>
+                    <li class="bg-forest p-7 sm:p-8 reveal">
+                        <span class="font-mono text-sm text-amber">02</span>
+                        <h3 class="mt-5 font-serif text-2xl" data-i18n="how.step2.title">Estrazione e Smart Cartridge</h3>
+                        <p class="mt-3 text-[0.95rem] leading-relaxed text-paper/75" data-i18n="how.step2.text">I piccioli prelevati vengono lavati in un buffer e il campione è caricato nella Smart Cartridge, la cartuccia monouso coperta da domanda di brevetto.</p>
+                    </li>
+                    <li class="bg-forest p-7 sm:p-8 reveal">
+                        <span class="font-mono text-sm text-amber">03</span>
+                        <h3 class="mt-5 font-serif text-2xl" data-i18n="how.step3.title">Lettore ottico</h3>
+                        <p class="mt-3 text-[0.95rem] leading-relaxed text-paper/75" data-i18n="how.step3.text">Lettura in camera oscura: l'esito compare a schermo in 5 minuti e viene inviato al cloud, con reportistica GIS integrata.</p>
+                    </li>
+                </ol>
+
+                <div class="mt-16 reveal">
+                    <h3 class="font-serif text-2xl" data-i18n="compare.title">Rispetto alle alternative di oggi</h3>
+                    <div class="mt-6 overflow-x-auto">
+                        <table class="w-full min-w-[40rem] text-left text-[0.95rem]">
+                            <thead>
+                                <tr class="border-b border-paper/25">
+                                    <th scope="col" class="eyebrow font-normal text-paper/60 py-3 pr-6 w-[24%]" data-i18n="compare.col1">Alternativa</th>
+                                    <th scope="col" class="eyebrow font-normal text-paper/60 py-3 pr-6" data-i18n="compare.col2">Limite</th>
+                                    <th scope="col" class="eyebrow font-normal text-amber py-3 w-[34%]">PhytoAlert</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-paper/15">
+                                <tr>
+                                    <th scope="row" class="py-4 pr-6 font-semibold align-top" data-i18n="compare.row1.name">PCR di laboratorio</th>
+                                    <td class="py-4 pr-6 text-paper/75 align-top" data-i18n="compare.row1.limit">Gold standard, ma 7–14 giorni di attesa e 70–150 € a campione.</td>
+                                    <td class="py-4 align-top" data-i18n="compare.row1.us">Esito in 5 minuti, circa 5 € a campione.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="py-4 pr-6 font-semibold align-top" data-i18n="compare.row2.name">Droni iperspettrali</th>
+                                    <td class="py-4 pr-6 text-paper/75 align-top" data-i18n="compare.row2.limit">Individuano solo le piante che mostrano già i sintomi.</td>
+                                    <td class="py-4 align-top" data-i18n="compare.row2.us">Rileva il patogeno prima dei sintomi.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="py-4 pr-6 font-semibold align-top" data-i18n="compare.row3.name">LAMP portatili</th>
+                                    <td class="py-4 pr-6 text-paper/75 align-top" data-i18n="compare.row3.limit">4.000–6.000 € di hardware e competenze tecniche per preparare e leggere il campione.</td>
+                                    <td class="py-4 align-top" data-i18n="compare.row3.us">Kit da 400–600 €, Pick &amp; Play: nessun personale specializzato.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VANTAGGI -->
+        <section id="vantaggi" class="max-w-page mx-auto px-5 sm:px-8 py-20 md:py-28">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
+                <div class="lg:col-span-4 reveal">
+                    <div class="lg:sticky lg:top-28">
+                        <p class="eyebrow text-ink-soft"><span class="text-amber-dark">03</span> — <span data-i18n="benefits.label">Vantaggi</span></p>
+                        <h2 class="mt-4 font-serif text-3xl sm:text-[2.6rem] leading-[1.1] tracking-[-0.015em]" data-i18n="benefits.title">Monitoraggio e prevenzione, veloci e mirati.</h2>
+                        <p class="mt-6 text-ink-soft leading-relaxed" data-i18n="benefits.intro">Un'ora al giorno di campionamento e l'esito in pochi minuti: il rischio torna sotto il tuo controllo.</p>
+                    </div>
+                </div>
+
+                <ul class="lg:col-span-8 border-t border-rule">
+                    <li class="grid sm:grid-cols-[3rem_1fr] gap-2 sm:gap-6 py-8 border-b border-rule reveal">
+                        <span class="font-mono text-sm text-amber-dark pt-1">01</span>
+                        <div>
+                            <h3 class="text-xl font-semibold tracking-tight" data-i18n="benefits.item1.title">Protezione efficace e tempestiva</h3>
+                            <p class="mt-2 text-ink-soft leading-relaxed" data-i18n="benefits.item1.text">Individua i focolai di infezione prima che si diffondano, con uno screening preventivo su larga scala per tutto il periodo stagionale a rischio.</p>
+                        </div>
+                    </li>
+                    <li class="grid sm:grid-cols-[3rem_1fr] gap-2 sm:gap-6 py-8 border-b border-rule reveal">
+                        <span class="font-mono text-sm text-amber-dark pt-1">02</span>
+                        <div>
+                            <h3 class="text-xl font-semibold tracking-tight" data-i18n="benefits.item2.title">Conformità regolamentare</h3>
+                            <p class="mt-2 text-ink-soft leading-relaxed" data-i18n="benefits.item2.text">Genera una traccia diagnostica geolocalizzata, utile a documentare lo stato sanitario del vigneto verso i Servizi Fitosanitari Regionali e a supportare un'estirpazione mirata, non totale.</p>
+                        </div>
+                    </li>
+                    <li class="grid sm:grid-cols-[3rem_1fr] gap-2 sm:gap-6 py-8 border-b border-rule reveal">
+                        <span class="font-mono text-sm text-amber-dark pt-1">03</span>
+                        <div>
+                            <h3 class="text-xl font-semibold tracking-tight" data-i18n="benefits.item3.title">Sostenibilità e risparmio</h3>
+                            <p class="mt-2 text-ink-soft leading-relaxed" data-i18n="benefits.item3.text">Indirizza gli insetticidi contro i vettori solo dove la presenza del patogeno è confermata, riducendo impronta chimica e costi di trattamento.</p>
+                        </div>
+                    </li>
+                    <li class="grid sm:grid-cols-[3rem_1fr] gap-2 sm:gap-6 py-8 border-b border-rule reveal">
+                        <span class="font-mono text-sm text-amber-dark pt-1">04</span>
+                        <div>
+                            <h3 class="text-xl font-semibold tracking-tight" data-i18n="benefits.item4.title">Intelligence operativa</h3>
+                            <p class="mt-2 text-ink-soft leading-relaxed" data-i18n="benefits.item4.text">La mappa di rischio guida l'operatore verso le zone prioritarie: più punti campionati per ettaro dove il rischio storico è alto, meno screening ridondante dove è basso.</p>
+                        </div>
+                    </li>
+                    <li class="grid sm:grid-cols-[3rem_1fr] gap-2 sm:gap-6 py-8 border-b border-rule reveal">
+                        <span class="font-mono text-sm text-amber-dark pt-1">05</span>
+                        <div>
+                            <h3 class="text-xl font-semibold tracking-tight" data-i18n="benefits.item5.title">Pick &amp; Play</h3>
+                            <p class="mt-2 text-ink-soft leading-relaxed" data-i18n="benefits.item5.text">Non serve personale specializzato per preparare o leggere il campione, a differenza dei sistemi LAMP concorrenti.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- TEAM -->
+        <section id="team" class="bg-paper-2/60 border-t border-rule">
+            <div class="max-w-page mx-auto px-5 sm:px-8 py-20 md:py-28">
+                <div class="grid lg:grid-cols-12 gap-6 lg:gap-14 items-end reveal">
+                    <div class="lg:col-span-7">
+                        <p class="eyebrow text-ink-soft"><span class="text-amber-dark">04</span> — <span data-i18n="team.label">Il team</span></p>
+                        <h2 class="mt-4 font-serif text-3xl sm:text-[2.6rem] leading-[1.1] tracking-[-0.015em]" data-i18n="team.title">Dalla ricerca al vigneto.</h2>
+                    </div>
+                    <p class="lg:col-span-5 text-ink-soft leading-relaxed" data-i18n="team.intro">Patologia vegetale, biochimica analitica e data science: quattro docenti dell'Università di Bologna e due giovani sviluppatori.</p>
+                </div>
+
+                <ul class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 border-t border-rule">
+                    <li class="flex gap-5 py-8 border-b border-rule reveal">
+                        <img src="img/Sofia_Avnet_PhytoAlert.png" width="72" height="72" alt="Sofia Avnet" class="w-[72px] h-[72px] rounded-full object-cover shrink-0 bg-paper">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-lg font-semibold tracking-tight">Sofia Avnet</h3>
+                                <a href="https://www.linkedin.com/in/sofia-avnet-31b1b441/" target="_blank" rel="noopener noreferrer" aria-label="Sofia Avnet su LinkedIn" class="inline-flex items-center justify-center w-8 h-8 -my-1 rounded text-ink-soft hover:text-leaf hover:bg-paper transition-colors">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.78a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></svg>
+                                </a>
+                            </div>
+                            <p class="mt-0.5 text-sm font-medium text-leaf" data-i18n="team.sofia.role">Responsabile scientifica · Co-founder</p>
+                            <p class="mt-2 text-sm leading-relaxed text-ink-soft" data-i18n="team.sofia.bio">Biologa e biotecnologa, Professoressa Associata all'Università di Bologna. Co-autrice del brevetto Smart Cartridge.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-5 py-8 border-b border-rule reveal">
+                        <img src="img/Elena_Baraldi_PhytoAlert.png" width="72" height="72" alt="Elena Baraldi" class="w-[72px] h-[72px] rounded-full object-cover shrink-0 bg-paper">
+                        <div class="min-w-0">
+                            <h3 class="text-lg font-semibold tracking-tight">Elena Baraldi</h3>
+                            <p class="mt-0.5 text-sm font-medium text-leaf" data-i18n="team.elena.role">Patologia vegetale · Co-founder</p>
+                            <p class="mt-2 text-sm leading-relaxed text-ink-soft" data-i18n="team.elena.bio">Professoressa Associata all'Università di Bologna, esperta di interazioni pianta-patogeno e malattie delle colture.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-5 py-8 border-b border-rule reveal">
+                        <img src="img/Claudio_Ratti_PhytoAlert.png" width="72" height="72" alt="Claudio Ratti" class="w-[72px] h-[72px] rounded-full object-cover shrink-0 bg-paper">
+                        <div class="min-w-0">
+                            <h3 class="text-lg font-semibold tracking-tight">Claudio Ratti</h3>
+                            <p class="mt-0.5 text-sm font-medium text-leaf" data-i18n="team.claudio.role">Patologia vegetale · Co-founder</p>
+                            <p class="mt-2 text-sm leading-relaxed text-ink-soft" data-i18n="team.claudio.bio">Professore Associato all'Università di Bologna, segue la validazione di campo e i rapporti con il settore vitivinicolo.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-5 py-8 border-b border-rule reveal">
+                        <img src="img/Cristiana_Caliceti_PhytoAlert.png" width="72" height="72" alt="Cristiana Caliceti" class="w-[72px] h-[72px] rounded-full object-cover shrink-0 bg-paper">
+                        <div class="min-w-0">
+                            <h3 class="text-lg font-semibold tracking-tight">Cristiana Caliceti</h3>
+                            <p class="mt-0.5 text-sm font-medium text-leaf" data-i18n="team.cristiana.role">Biochimica analitica</p>
+                            <p class="mt-2 text-sm leading-relaxed text-ink-soft" data-i18n="team.cristiana.bio">Professoressa Associata all'Università di Bologna, specializzata in biosensori point-of-care e tecniche spettroscopiche per la diagnostica.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-5 py-8 border-b border-rule reveal">
+                        <img src="img/Giovanni_Zecchini_PhytoAlert.png" width="72" height="72" alt="Giovanni Zecchini" class="w-[72px] h-[72px] rounded-full object-cover shrink-0 bg-paper">
+                        <div class="min-w-0">
+                            <h3 class="text-lg font-semibold tracking-tight">Giovanni Zecchini</h3>
+                            <p class="mt-0.5 text-sm font-medium text-leaf" data-i18n="team.giovanni.role">Data &amp; Business</p>
+                            <p class="mt-2 text-sm leading-relaxed text-ink-soft" data-i18n="team.giovanni.bio">Master Tech Forward all'Università di Bologna, con background in Scienze Statistiche, Economia e Impresa.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-5 py-8 border-b border-rule reveal">
+                        <img src="img/Leonardo_Billi_PhytoAlert.png" width="72" height="72" alt="Leonardo Billi" class="w-[72px] h-[72px] rounded-full object-cover shrink-0 bg-paper">
+                        <div class="min-w-0">
+                            <h3 class="text-lg font-semibold tracking-tight">Leonardo Billi</h3>
+                            <p class="mt-0.5 text-sm font-medium text-leaf" data-i18n="team.leonardo.role">Artificial Intelligence &amp; ML</p>
+                            <p class="mt-2 text-sm leading-relaxed text-ink-soft" data-i18n="team.leonardo.bio">Master Tech Forward all'Università di Bologna, sviluppa gli algoritmi di riconoscimento pattern di PhytoAlert.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section id="contatti" class="bg-forest text-paper">
+            <div class="max-w-page mx-auto px-5 sm:px-8 py-20 md:py-24 grid lg:grid-cols-12 gap-10 items-end">
+                <div class="lg:col-span-7 reveal">
+                    <h2 class="font-serif text-3xl sm:text-5xl leading-[1.08] tracking-[-0.02em]" data-i18n="cta.title" data-i18n-html="true">Vediamo insieme <em class="italic text-amber">il tuo vigneto</em>.</h2>
+                    <p class="mt-5 text-paper/80 text-lg leading-relaxed max-w-xl" data-i18n="cta.text">Vuoi saperne di più o richiedere una demo sul campo? Scrivici: ti mettiamo in contatto con chi ha sviluppato la tecnologia.</p>
+                </div>
+                <div class="lg:col-span-5 lg:justify-self-end reveal">
+                    <a data-mail-link href="mailto:info@phytoalert.com?subject=PhytoAlert%20-%20Richiesta%20di%20informazioni" class="inline-flex items-center gap-3 h-14 px-7 rounded-md bg-amber text-ink font-semibold text-base hover:bg-amber-dark transition-colors">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                        <span>info@phytoalert.com</span>
+                    </a>
+                    <p class="mt-4 text-sm text-paper/65" data-i18n="cta.response">Ti rispondiamo entro 24 ore.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0b1f15] text-paper/60 text-sm">
+        <div class="max-w-page mx-auto px-5 sm:px-8 py-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <img src="img/logo_phytoalert.png" alt="" width="28" height="27" class="h-7 w-auto" loading="lazy">
+                <span class="font-semibold text-paper">Phyto<span class="text-amber">Alert</span></span>
+            </div>
+            <nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer">
+                <a href="#problema" data-i18n="nav.problem" class="hover:text-paper transition-colors">Il problema</a>
+                <a href="#come-funziona" data-i18n="nav.how" class="hover:text-paper transition-colors">Come funziona</a>
+                <a href="#team" data-i18n="nav.team" class="hover:text-paper transition-colors">Team</a>
+                <a href="mailto:info@phytoalert.com" class="hover:text-paper transition-colors">info@phytoalert.com</a>
+            </nav>
+            <p data-i18n="footer">© 2026 PhytoAlert. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            it: {
+                'meta.title': 'PhytoAlert — Diagnosi in campo della Flavescenza dorata',
+                'meta.description': "PhytoAlert rileva la Flavescenza dorata direttamente in vigneto, prima dei sintomi: esito in 5 minuti con la Smart Cartridge brevettata. Nata dalla ricerca dell'Università di Bologna.",
+                'a11y.skip': 'Vai al contenuto',
+                'lang.label': 'Lingua',
+                'nav.label': 'Principale',
+                'nav.menu': 'Menu',
+                'nav.problem': 'Il problema',
+                'nav.how': 'Come funziona',
+                'nav.benefits': 'Vantaggi',
+                'nav.team': 'Team',
+                'nav.contact': 'Richiedi una demo',
+                'hero.eyebrow': 'Diagnostica in campo · Flavescenza dorata',
+                'hero.title': 'Proteggi le tue viti quando sei <em class="italic underline-amber">ancora in tempo</em>.',
+                'hero.description': "PhytoAlert individua il patogeno direttamente in vigneto, prima che la malattia sia visibile. Sonde a naso chimico e un algoritmo proprietario di Machine Learning restituiscono la diagnosi in pochi minuti, così puoi intervenire prima che l'infezione si diffonda.",
+                'hero.cta': 'Parla con un nostro esperto',
+                'hero.learnMore': 'Scopri come funziona',
+                'hero.fact1.label': 'Esito',
+                'hero.fact1.value': '5 min',
+                'hero.fact2.label': 'Rilevazione',
+                'hero.fact2.value': 'Pre‑sintomatica',
+                'hero.fact3.label': 'Origine',
+                'hero.fact3.value': 'UniBo',
+                'hero.imageAlt': 'Filari di vite in collina al tramonto, con una tenuta sullo sfondo',
+                'hero.caption': 'Esito in 5 minuti con la Smart Cartridge.',
+                'hero.patent': 'Brevetto depositato',
+                'strip.unibo': "Nata dalla ricerca dell'<strong class=\"font-semibold text-ink\">Università di Bologna</strong>",
+                'strip.patent': 'Domanda di brevetto <span class="font-mono text-ink">n. 102026000026194</span>',
+                'strip.trl': 'Tecnologia a <strong class="font-semibold text-ink">TRL 4</strong>, validazione in corso',
+                'problem.label': 'Il problema',
+                'problem.title': 'Quando la Flavescenza dorata si vede, spesso è già tardi.',
+                'problem.intro': "È un'infezione batterica da quarantena e un vero incubo per i viticoltori: resta latente per mesi, e gli strumenti diagnostici di oggi non permettono di controllare le piante asintomatiche su larga scala.",
+                'problem.piedmont': 'Solo in Piemonte, 7.000 ettari di vigneto distrutti in 18 anni.',
+                'problem.stat1.sr': 'Latenza',
+                'problem.stat1.value': '6–18 <span class="text-2xl">mesi</span>',
+                'problem.stat1.title': 'Scoperta tardiva',
+                'problem.stat1.text': 'Il periodo in cui una vite può essere infetta senza mostrare alcun sintomo.',
+                'problem.stat2.sr': 'Tempi della PCR',
+                'problem.stat2.value': '7–14 <span class="text-2xl">giorni</span>',
+                'problem.stat2.title': 'Diagnosi lenta e costosa',
+                'problem.stat2.text': "L'attesa per una PCR di laboratorio, a 70–150 € a campione: impossibile uno screening di massa.",
+                'problem.stat3.sr': 'Soglia di estirpo',
+                'problem.stat3.value': '&gt;20%',
+                'problem.stat3.title': 'Estirpo totale obbligatorio',
+                'problem.stat3.text': "Oltre questa soglia di infezione, il Regolamento UE 2016/2031 impone di estirpare l'intero vigneto.",
+                'problem.stat4.sr': 'Danno per ettaro',
+                'problem.stat4.value': '65–85k <span class="text-2xl">€/ha</span>',
+                'problem.stat4.title': 'Danno irreversibile',
+                'problem.stat4.text': 'Tra reimpianto e mancato reddito nei 3–4 anni in cui il vigneto non produce.',
+                'problem.sources': 'Fonti: Regione Piemonte, DGR; prezzi di estirpazione e messa a dimora di un vigneto; I Grandi Vini, 2025.',
+                'how.label': 'Come funziona',
+                'how.title': 'Un laboratorio tascabile, dal filare al referto.',
+                'how.intro': 'Le tecnologie di biosensoristica sviluppate per individuare rapidamente i patogeni nei pazienti umani, adattate alla salute delle piante. Semplice quanto un tampone rapido.',
+                'how.step1.title': 'Navigatore da campo',
+                'how.step1.text': "Il GPS guida l'operatore verso le zone a rischio della mappa. Si campionano pool da 10 piante, con un dispositivo IP67 resistente a caldo, polvere e umidità.",
+                'how.step2.title': 'Estrazione e Smart Cartridge',
+                'how.step2.text': 'I piccioli prelevati vengono lavati in un buffer e il campione è caricato nella Smart Cartridge, la cartuccia monouso coperta da domanda di brevetto.',
+                'how.step3.title': 'Lettore ottico',
+                'how.step3.text': "Lettura in camera oscura: l'esito compare a schermo in 5 minuti e viene inviato al cloud, con reportistica GIS integrata.",
+                'compare.title': 'Rispetto alle alternative di oggi',
+                'compare.col1': 'Alternativa',
+                'compare.col2': 'Limite',
+                'compare.row1.name': 'PCR di laboratorio',
+                'compare.row1.limit': 'Gold standard, ma 7–14 giorni di attesa e 70–150 € a campione.',
+                'compare.row1.us': 'Esito in 5 minuti, circa 5 € a campione.',
+                'compare.row2.name': 'Droni iperspettrali',
+                'compare.row2.limit': 'Individuano solo le piante che mostrano già i sintomi.',
+                'compare.row2.us': 'Rileva il patogeno prima dei sintomi.',
+                'compare.row3.name': 'LAMP portatili',
+                'compare.row3.limit': '4.000–6.000 € di hardware e competenze tecniche per preparare e leggere il campione.',
+                'compare.row3.us': 'Kit da 400–600 €, Pick & Play: nessun personale specializzato.',
+                'benefits.label': 'Vantaggi',
+                'benefits.title': 'Monitoraggio e prevenzione, veloci e mirati.',
+                'benefits.intro': "Un'ora al giorno di campionamento e l'esito in pochi minuti: il rischio torna sotto il tuo controllo.",
+                'benefits.item1.title': 'Protezione efficace e tempestiva',
+                'benefits.item1.text': 'Individua i focolai di infezione prima che si diffondano, con uno screening preventivo su larga scala per tutto il periodo stagionale a rischio.',
+                'benefits.item2.title': 'Conformità regolamentare',
+                'benefits.item2.text': "Genera una traccia diagnostica geolocalizzata, utile a documentare lo stato sanitario del vigneto verso i Servizi Fitosanitari Regionali e a supportare un'estirpazione mirata, non totale.",
+                'benefits.item3.title': 'Sostenibilità e risparmio',
+                'benefits.item3.text': 'Indirizza gli insetticidi contro i vettori solo dove la presenza del patogeno è confermata, riducendo impronta chimica e costi di trattamento.',
+                'benefits.item4.title': 'Intelligence operativa',
+                'benefits.item4.text': "La mappa di rischio guida l'operatore verso le zone prioritarie: più punti campionati per ettaro dove il rischio storico è alto, meno screening ridondante dove è basso.",
+                'benefits.item5.title': 'Pick & Play',
+                'benefits.item5.text': 'Non serve personale specializzato per preparare o leggere il campione, a differenza dei sistemi LAMP concorrenti.',
+                'team.label': 'Il team',
+                'team.title': 'Dalla ricerca al vigneto.',
+                'team.intro': "Patologia vegetale, biochimica analitica e data science: quattro docenti dell'Università di Bologna e due giovani sviluppatori.",
+                'team.sofia.role': 'Responsabile scientifica · Co-founder',
+                'team.sofia.bio': "Biologa e biotecnologa, Professoressa Associata all'Università di Bologna. Co-autrice del brevetto Smart Cartridge.",
+                'team.elena.role': 'Patologia vegetale · Co-founder',
+                'team.elena.bio': "Professoressa Associata all'Università di Bologna, esperta di interazioni pianta-patogeno e malattie delle colture.",
+                'team.claudio.role': 'Patologia vegetale · Co-founder',
+                'team.claudio.bio': "Professore Associato all'Università di Bologna, segue la validazione di campo e i rapporti con il settore vitivinicolo.",
+                'team.cristiana.role': 'Biochimica analitica',
+                'team.cristiana.bio': "Professoressa Associata all'Università di Bologna, specializzata in biosensori point-of-care e tecniche spettroscopiche per la diagnostica.",
+                'team.giovanni.role': 'Data & Business',
+                'team.giovanni.bio': "Master Tech Forward all'Università di Bologna, con background in Scienze Statistiche, Economia e Impresa.",
+                'team.leonardo.role': 'Artificial Intelligence & ML',
+                'team.leonardo.bio': "Master Tech Forward all'Università di Bologna, sviluppa gli algoritmi di riconoscimento pattern di PhytoAlert.",
+                'cta.title': 'Vediamo insieme <em class="italic text-amber">il tuo vigneto</em>.',
+                'cta.text': 'Vuoi saperne di più o richiedere una demo sul campo? Scrivici: ti mettiamo in contatto con chi ha sviluppato la tecnologia.',
+                'cta.response': 'Ti rispondiamo entro 24 ore.',
+                'cta.subject': 'PhytoAlert - Richiesta di informazioni',
+                'footer': '© 2026 PhytoAlert. Tutti i diritti riservati.'
+            },
+            en: {
+                'meta.title': 'PhytoAlert — In-field diagnosis of Flavescence dorée',
+                'meta.description': 'PhytoAlert detects Flavescence dorée directly in the vineyard, before symptoms appear: results in 5 minutes with the patent-pending Smart Cartridge. Born from research at the University of Bologna.',
+                'a11y.skip': 'Skip to content',
+                'lang.label': 'Language',
+                'nav.label': 'Main',
+                'nav.menu': 'Menu',
+                'nav.problem': 'The problem',
+                'nav.how': 'How it works',
+                'nav.benefits': 'Benefits',
+                'nav.team': 'Team',
+                'nav.contact': 'Request a demo',
+                'hero.eyebrow': 'In-field diagnostics · Flavescence dorée',
+                'hero.title': 'Protect your vines while there is <em class="italic underline-amber">still time</em>.',
+                'hero.description': 'PhytoAlert detects the pathogen right in the vineyard, before the disease becomes visible. Chemical-nose probes and a proprietary Machine Learning algorithm return a diagnosis in minutes, so you can act before the infection spreads.',
+                'hero.cta': 'Talk to one of our experts',
+                'hero.learnMore': 'See how it works',
+                'hero.fact1.label': 'Result',
+                'hero.fact1.value': '5 min',
+                'hero.fact2.label': 'Detection',
+                'hero.fact2.value': 'Pre‑symptomatic',
+                'hero.fact3.label': 'Origin',
+                'hero.fact3.value': 'UniBo',
+                'hero.imageAlt': 'Hillside vine rows at sunset, with an estate in the background',
+                'hero.caption': 'Results in 5 minutes with the Smart Cartridge.',
+                'hero.patent': 'Patent filed',
+                'strip.unibo': 'Born from research at the <strong class="font-semibold text-ink">University of Bologna</strong>',
+                'strip.patent': 'Patent application <span class="font-mono text-ink">no. 102026000026194</span>',
+                'strip.trl': 'Technology at <strong class="font-semibold text-ink">TRL 4</strong>, validation under way',
+                'problem.label': 'The problem',
+                'problem.title': 'By the time Flavescence dorée is visible, it is often too late.',
+                'problem.intro': "It is a quarantine bacterial infection and a real nightmare for winegrowers: it stays latent for months, and today's diagnostic tools cannot check asymptomatic plants at scale.",
+                'problem.piedmont': 'In Piedmont alone, 7,000 hectares of vineyard destroyed in 18 years.',
+                'problem.stat1.sr': 'Latency',
+                'problem.stat1.value': '6–18 <span class="text-2xl">months</span>',
+                'problem.stat1.title': 'Late detection',
+                'problem.stat1.text': 'How long a vine can be infected without showing any symptom.',
+                'problem.stat2.sr': 'PCR turnaround',
+                'problem.stat2.value': '7–14 <span class="text-2xl">days</span>',
+                'problem.stat2.title': 'Slow, costly diagnosis',
+                'problem.stat2.text': 'The wait for a lab PCR test, at €70–150 per sample: mass screening is out of reach.',
+                'problem.stat3.sr': 'Uprooting threshold',
+                'problem.stat3.value': '&gt;20%',
+                'problem.stat3.title': 'Mandatory total uprooting',
+                'problem.stat3.text': 'Above this infection rate, EU Regulation 2016/2031 requires the entire vineyard to be uprooted.',
+                'problem.stat4.sr': 'Loss per hectare',
+                'problem.stat4.value': '€65–85k <span class="text-2xl">/ha</span>',
+                'problem.stat4.title': 'Irreversible loss',
+                'problem.stat4.text': 'Replanting costs plus lost income over the 3–4 years the vineyard does not produce.',
+                'problem.sources': 'Sources: Regione Piemonte, DGR; vineyard uprooting and replanting costs; I Grandi Vini, 2025.',
+                'how.label': 'How it works',
+                'how.title': 'A pocket laboratory, from vine row to report.',
+                'how.intro': 'Biosensor technologies developed to rapidly detect pathogens in human patients, adapted to plant health. As simple as a rapid swab test.',
+                'how.step1.title': 'Field navigator',
+                'how.step1.text': 'GPS guides the operator to the risk zones on the map. Plants are sampled in pools of 10, with an IP67 device that withstands heat, dust and humidity.',
+                'how.step2.title': 'Extraction and Smart Cartridge',
+                'how.step2.text': 'The collected petioles are washed in a buffer and the sample is loaded into the Smart Cartridge, the single-use cartridge covered by a patent application.',
+                'how.step3.title': 'Optical reader',
+                'how.step3.text': 'Read in a dark chamber: the result appears on screen in 5 minutes and is sent to the cloud, with built-in GIS reporting.',
+                'compare.title': "Compared with today's alternatives",
+                'compare.col1': 'Alternative',
+                'compare.col2': 'Limitation',
+                'compare.row1.name': 'Lab PCR',
+                'compare.row1.limit': 'The gold standard, but 7–14 days to a result and €70–150 per sample.',
+                'compare.row1.us': 'Results in 5 minutes, around €5 per sample.',
+                'compare.row2.name': 'Hyperspectral drones',
+                'compare.row2.limit': 'Only spot plants that already show symptoms.',
+                'compare.row2.us': 'Detects the pathogen before symptoms appear.',
+                'compare.row3.name': 'Portable LAMP',
+                'compare.row3.limit': '€4,000–6,000 of hardware and technical skills to prepare and read the sample.',
+                'compare.row3.us': '€400–600 kit, Pick & Play: no specialist staff needed.',
+                'benefits.label': 'Benefits',
+                'benefits.title': 'Fast, targeted monitoring and prevention.',
+                'benefits.intro': 'One hour of sampling a day and results within minutes: the risk is back under your control.',
+                'benefits.item1.title': 'Effective, timely protection',
+                'benefits.item1.text': 'Identify infection hotspots before they spread, with preventive large-scale screening throughout the high-risk season.',
+                'benefits.item2.title': 'Regulatory compliance',
+                'benefits.item2.text': 'Generate a geolocated diagnostic record to document vineyard health for Regional Plant Health Services and support targeted, rather than total, uprooting.',
+                'benefits.item3.title': 'Sustainability and savings',
+                'benefits.item3.text': 'Target insecticides against vectors only where the pathogen is confirmed, reducing chemical footprint and treatment costs.',
+                'benefits.item4.title': 'Operational intelligence',
+                'benefits.item4.text': 'The risk map directs operators to priority zones: more sampling points per hectare where historical risk is high, less redundant screening where it is low.',
+                'benefits.item5.title': 'Pick & Play',
+                'benefits.item5.text': 'No specialist staff are needed to prepare or read the sample, unlike competing LAMP systems.',
+                'team.label': 'The team',
+                'team.title': 'From research to the vineyard.',
+                'team.intro': 'Plant pathology, analytical biochemistry and data science: four University of Bologna faculty members and two young developers.',
+                'team.sofia.role': 'Scientific Lead · Co-founder',
+                'team.sofia.bio': 'Biologist and biotechnologist, Associate Professor at the University of Bologna. Co-author of the Smart Cartridge patent.',
+                'team.elena.role': 'Plant Pathology · Co-founder',
+                'team.elena.bio': 'Associate Professor at the University of Bologna, with expertise in plant–pathogen interactions and crop diseases.',
+                'team.claudio.role': 'Plant Pathology · Co-founder',
+                'team.claudio.bio': 'Associate Professor at the University of Bologna, leading field validation and relations with the wine sector.',
+                'team.cristiana.role': 'Analytical Biochemistry',
+                'team.cristiana.bio': 'Associate Professor at the University of Bologna, specializing in point-of-care biosensors and spectroscopic techniques for diagnostics.',
+                'team.giovanni.role': 'Data & Business',
+                'team.giovanni.bio': "Tech Forward Master's student at the University of Bologna, with a background in Statistics, Economics and Business.",
+                'team.leonardo.role': 'Artificial Intelligence & ML',
+                'team.leonardo.bio': "Tech Forward Master's student at the University of Bologna, developing PhytoAlert's pattern-recognition algorithms.",
+                'cta.title': 'Let’s look at <em class="italic text-amber">your vineyard</em> together.',
+                'cta.text': 'Want to learn more or request a field demo? Write to us and we will put you in touch with the people who built the technology.',
+                'cta.response': 'We reply within 24 hours.',
+                'cta.subject': 'PhytoAlert - Information request',
+                'footer': '© 2026 PhytoAlert. All rights reserved.'
+            }
+        };
+
+        const STORAGE_KEY = 'phytoalert-language';
+        const languageToggle = document.getElementById('languageToggle');
+        const languageMenu = document.getElementById('languageMenu');
+        const languageCurrent = document.getElementById('languageCurrent');
+        const languageOptions = document.querySelectorAll('.language-option');
+        const mailLink = document.querySelector('[data-mail-link]');
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function getStoredLanguage() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === 'it' || stored === 'en') return stored;
+            } catch (e) { /* storage unavailable */ }
+            return (navigator.language || 'it').toLowerCase().startsWith('it') ? 'it' : 'en';
+        }
+
+        function setLanguageMenu(open) {
+            languageMenu.classList.toggle('hidden', !open);
+            languageToggle.setAttribute('aria-expanded', String(open));
+        }
+
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach((el) => {
+                const value = t[el.dataset.i18n];
+                if (value === undefined) return;
+                if (el.dataset.i18nHtml === 'true') el.innerHTML = value;
+                else el.textContent = value;
+            });
+            document.querySelectorAll('[data-i18n-attr]').forEach((el) => {
+                el.dataset.i18nAttr.split('|').forEach((item) => {
+                    const [attr, key] = item.split(':');
+                    if (attr && key && t[key] !== undefined) el.setAttribute(attr, t[key]);
+                });
+            });
+
+            document.title = t['meta.title'];
+            languageCurrent.textContent = lang.toUpperCase();
+            languageOptions.forEach((option) => {
+                const active = option.dataset.lang === lang;
+                option.setAttribute('aria-current', active ? 'true' : 'false');
+                option.classList.toggle('font-semibold', active);
+                option.classList.toggle('bg-paper', active);
+            });
+            if (mailLink) mailLink.href = 'mailto:info@phytoalert.com?subject=' + encodeURIComponent(t['cta.subject']);
+
+            try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* storage unavailable */ }
+            setLanguageMenu(false);
+        }
+
+        languageToggle.addEventListener('click', () => setLanguageMenu(languageMenu.classList.contains('hidden')));
+        languageOptions.forEach((option) => option.addEventListener('click', () => {
+            applyLanguage(option.dataset.lang);
+            languageToggle.focus();
+        }));
+        document.addEventListener('click', (event) => {
+            if (!languageToggle.contains(event.target) && !languageMenu.contains(event.target)) setLanguageMenu(false);
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            if (!languageMenu.classList.contains('hidden')) { setLanguageMenu(false); languageToggle.focus(); }
+            if (!mobileMenu.classList.contains('hidden')) { toggleMobileMenu(false); menuToggle.focus(); }
+        });
+
+        function toggleMobileMenu(open) {
+            mobileMenu.classList.toggle('hidden', !open);
+            menuToggle.setAttribute('aria-expanded', String(open));
+        }
+        menuToggle.addEventListener('click', () => toggleMobileMenu(mobileMenu.classList.contains('hidden')));
+        mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggleMobileMenu(false)));
+
+        // Header border once the page scrolls
+        const header = document.getElementById('siteHeader');
+        const onScroll = () => header.classList.toggle('border-rule', window.scrollY > 8);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        // Subtle reveal on scroll
+        const revealEls = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) { entry.target.classList.add('is-in'); io.unobserve(entry.target); }
+                });
+            }, { rootMargin: '0px 0px -8% 0px' });
+            revealEls.forEach((el) => io.observe(el));
+        } else {
+            revealEls.forEach((el) => el.classList.add('is-in'));
+        }
+
+        applyLanguage(getStoredLanguage());
+    </script>
+</body>
+</html>
